@@ -1,0 +1,41 @@
+.paginate {
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  color: #343a40;
+}
+
+.paginate li {
+  margin: 0 5px;
+}
+
+.paginate a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.paginate ul {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: #111;
+}
+
+.paginate li:hover {
+  background: #0c79e6;
+}
+
+.paginate a.active {
+  border-radius: 5px;
+}
+
+.paginate .current {
+  background: #56aaff;
+  font-weight: bold;
+}
