@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./Paginate.module.css";
 import Page from "./Page";
 
 const Paginate = (props) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(props.currentPage);
   const maxPageNumbers = 10;
   const totalPages = props.totalPages;
   const pageNumbers = [];
@@ -15,6 +15,10 @@ const Paginate = (props) => {
   if (currentPage === totalPages) {
     start = end - maxPageNumbers + 1;
   }
+
+  useEffect(() => {
+    setCurrentPage(props.currentPage);
+  }, [props.currentPage]);
 
   const handlePageClick = (number) => {
     props.paginate(number);
