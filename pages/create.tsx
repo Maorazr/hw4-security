@@ -2,27 +2,25 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { useSession } from "next-auth/react";
+import submitPost from "./submitPost";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const { data: session, status } = useSession();  
+  const [file, setFile] = useState<File | null>(null);
+  const { data: session, status } = useSession();
   let email = session?.user?.email;
-  const submitData = async (e: React.SyntheticEvent) => {
+
+  const submitData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const body = { title, content, session, email };
-      await fetch(`/api/post`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await Router.push("/drafts");
-    } catch (error) {
-      console.error(error);
+
+    await submitPost(title, content, session, email, file);
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
     }
   };
-
   return (
     <Layout>
       <div>
@@ -42,6 +40,7 @@ const Draft: React.FC = () => {
             rows={8}
             value={content}
           />
+          <input type="file" accept="video/*" onChange={handleFileChange} />
           <input disabled={!content || !title} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel

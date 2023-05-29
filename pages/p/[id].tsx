@@ -4,9 +4,8 @@ import ReactMarkdown from "react-markdown";
 import Layout from "../../components/Layout";
 import Router from "next/router";
 import { PostProps } from "../../components/Post";
-import prisma from '../../lib/prisma'
+import prisma from "../../lib/prisma";
 import { useSession } from "next-auth/react";
-
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findUnique({
@@ -20,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
   return {
-    props: post ?? { author: { name: "Me" } }
+    props: post ?? { author: { name: "Me" } },
   };
 };
 
@@ -28,19 +27,19 @@ async function publishPost(id: number): Promise<void> {
   await fetch(`/api/publish/${id}`, {
     method: "PUT",
   });
-  await Router.push("/")
+  await Router.push("/");
 }
 
 async function deletePost(id: number): Promise<void> {
   await fetch(`/api/post/${id}`, {
     method: "DELETE",
   });
-  await Router.push("/")
+  await Router.push("/");
 }
 
 const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Authenticating ...</div>;
   }
   const userHasValidSession = Boolean(session);
@@ -56,6 +55,7 @@ const Post: React.FC<PostProps> = (props) => {
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
         <ReactMarkdown children={props.content} />
+        {props.videoUrl && <video src={props.videoUrl} controls></video>}
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
