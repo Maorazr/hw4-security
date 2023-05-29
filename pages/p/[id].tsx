@@ -55,7 +55,13 @@ const Post: React.FC<PostProps> = (props) => {
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
         <ReactMarkdown children={props.content} />
-        {props.videoUrl && <video src={props.videoUrl} controls></video>}
+        {props.videoUrl && (
+          <video
+            src={props.videoUrl}
+            controls
+            style={{ maxWidth: "100%", maxHeight: "500px" }}
+          ></video>
+        )}
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./Paginate.module.css";
+import Page from "./Page";
 
 const Paginate = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,24 +21,36 @@ const Paginate = (props) => {
     setCurrentPage(number);
   };
   return (
-    <div className={classes.paginate}>
-      <ul className={classes.paginate}>
-        {pageNumbers.slice(start - 1, end).map((number) => (
-          <li key={number} className={classes.paginate}>
-            <a
-              onClick={() => handlePageClick(number)}
-              href="#"
-              className={`${classes.paginate} ${
-                number === currentPage ? classes.current : ""
-              }`}
-            >
-              {number}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Page
+      totalPages={totalPages}
+      pageNumbers={pageNumbers}
+      currentPage={currentPage}
+      handlePageClick={handlePageClick}
+      start={start}
+      end={end}
+    />
   );
 };
 
 export default Paginate;
+
+// this is the old jsx code that was in the Paginate.jsx file before I changed it to the above code
+// and moved it to the Page.jsx file
+
+// <div className={classes.paginate}>
+//   <ul className={classes.paginate}>
+//     {pageNumbers.slice(start - 1, end).map((number) => (
+//       <li key={number} className={classes.paginate}>
+//         <a
+//           onClick={() => handlePageClick(number)}
+//           href="#"
+//           className={`${classes.paginate} ${
+//             number === currentPage ? classes.current : ""
+//           }`}
+//         >
+//           {number}
+//         </a>
+//       </li>
+//     ))}
+//   </ul>
+// </div>

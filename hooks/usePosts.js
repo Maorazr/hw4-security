@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+
 export const usePosts = (initialPage) => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(initialPage);

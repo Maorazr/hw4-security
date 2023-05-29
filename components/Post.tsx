@@ -21,7 +21,14 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       <ReactMarkdown children={post.content} />
-      {post.videoUrl && <video src={post.videoUrl} controls></video>}
+      {post.videoUrl && (
+        <video
+          src={post.videoUrl}
+          controls
+          style={{ maxWidth: "100%", maxHeight: "500px" }}
+        ></video>
+      )}
+
       <style jsx>{`
         div {
           color: inherit;
