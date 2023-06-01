@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import classes from "./Paginate.module.css";
+
 import Page from "./Page";
 
 const Paginate = (props) => {
@@ -37,24 +37,3 @@ const Paginate = (props) => {
 };
 
 export default Paginate;
-
-// this is the old jsx code that was in the Paginate.jsx file before I changed it to the above code
-// and moved it to the Page.jsx file
-
-// <div className={classes.paginate}>
-//   <ul className={classes.paginate}>
-//     {pageNumbers.slice(start - 1, end).map((number) => (
-//       <li key={number} className={classes.paginate}>
-//         <a
-//           onClick={() => handlePageClick(number)}
-//           href="#"
-//           className={`${classes.paginate} ${
-//             number === currentPage ? classes.current : ""
-//           }`}
-//         >
-//           {number}
-//         </a>
-//       </li>
-//     ))}
-//   </ul>
-// </div>

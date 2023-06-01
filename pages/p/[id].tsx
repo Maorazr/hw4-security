@@ -6,6 +6,7 @@ import Router from "next/router";
 import { PostProps } from "../../components/Post";
 import prisma from "../../lib/prisma";
 import { useSession } from "next-auth/react";
+import Button from "@mui/material/Button";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findUnique({
@@ -59,14 +60,28 @@ const Post: React.FC<PostProps> = (props) => {
           <video
             src={props.videoUrl}
             controls
-            style={{ maxWidth: "100%", maxHeight: "500px" }}
+            style={{ maxWidth: "100%", maxHeight: "400px" }}
           ></video>
         )}
         {!props.published && userHasValidSession && postBelongsToUser && (
-          <button onClick={() => publishPost(props.id)}>Publish</button>
+          // <button onClick={() => publishPost(props.id)}>Publish</button>
+          <Button
+            variant="contained"
+            onClick={() => publishPost(props.id)}
+            sx={{ margin: 1, float: "right" }}
+          >
+            Publish
+          </Button>
         )}
         {userHasValidSession && postBelongsToUser && (
-          <button onClick={() => deletePost(props.id)}>Delete</button>
+          // <button onClick={() => deletePost(props.id)}>Delete</button>
+          <Button
+            variant="contained"
+            onClick={() => deletePost(props.id)}
+            sx={{ margin: 1, float: "right" }}
+          >
+            Delete
+          </Button>
         )}
       </div>
       <style jsx>{`

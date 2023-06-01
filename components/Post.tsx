@@ -27,6 +27,14 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
       style={postStyles}
     >
+      {post.videoUrl && (
+        <img
+          src="/icons8-video-25.png"
+          width="25px"
+          height="25px"
+          style={{ float: "right" }}
+        />
+      )}
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       <ReactMarkdown children={post.content} />
@@ -34,7 +42,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         <video
           src={post.videoUrl}
           controls
-          style={{ maxWidth: "100%", maxHeight: "500px" }}
+          style={{ maxWidth: "100%", maxHeight: "400px" }}
         ></video>
       )}
 

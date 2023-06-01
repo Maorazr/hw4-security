@@ -3,6 +3,7 @@ export const lightTheme = {
   "--text-color": "black",
   "--post-background-color": "white",
   "--post-text-color": "black",
+  "--color-text": "black",
 };
 
 export const darkTheme = {
@@ -10,4 +11,5 @@ export const darkTheme = {
   "--text-color": "white",
   "--post-background-color": "#333",
   "--post-text-color": "white",
+  "--color-text": "white",
 };

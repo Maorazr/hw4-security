@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import classes from "./Paginate.module.css";
+import { useTheme } from "../hooks/useTheme";
 
 const Page = (props) => {
+  const theme = useTheme();
   return (
     <div className={classes.paginate}>
-      <ul className={classes.paginate}>
+      <ul
+        className={classes.paginate}
+        color={theme.theme === "dark" ? "dark" : "light"}
+      >
         <li className={classes.paginate}>
           <a
             onClick={() => props.handlePageClick(1)}

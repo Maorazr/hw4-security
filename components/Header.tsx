@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import ThemeToggleButton from "./ThemeToggleButton";
 import Button from "@mui/material/Button";
-import { Session } from "next-auth";
+import { Session, Theme } from "next-auth";
 import classes from "./Header.module.css";
+import { useTheme } from "../hooks/useTheme";
 
 type HeaderLinkProps = {
   href: string;
@@ -17,18 +18,23 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
   href,
   isActive,
   children,
-}) => (
-  <Link href={href}>
-    <p
-      className={`${classes.link} ${classes.linkMargin} ${
-        isActive(href) ? classes.active : ""
-      }`}
-    >
-      {children}
-    </p>
-  </Link>
-);
-
+}) => {
+  const theme = useTheme();
+  return (
+    <Link href={href}>
+      <p
+        className={`${classes.link} ${classes.linkMargin} ${
+          isActive(href) ? classes.active : ""
+        }`}
+        style={{
+          color: theme.theme === "dark" ? "white" : "black",
+        }}
+      >
+        {children}
+      </p>
+    </Link>
+  );
+};
 type SectionProps = {
   session: Session | null;
   status: "loading" | "authenticated" | "unauthenticated";
@@ -102,7 +108,7 @@ const Header: React.FC = () => {
     router.pathname === pathname;
 
   const { data: session, status } = useSession();
-
+  const theme = useTheme();
   return (
     <nav className={classes.nav}>
       <ThemeToggleButton />
