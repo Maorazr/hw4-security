@@ -11,6 +11,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.3",
     "@next-auth/prisma-adapter": "1.0.5",
     "@prisma/client": "4.11.0",
     "cloudinary": "^1.37.0",
@@ -19,6 +22,7 @@
     "next": "13.2.3",
     "next-auth": "^4.22.1",
     "next-superjson": "0.0.4",
+    "next-themes": "^0.2.1",
     "nodemailer": "^6.9.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

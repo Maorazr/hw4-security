@@ -29,6 +29,7 @@
 
 .paginate li:hover {
   background: #0c79e6;
+  box-shadow: 3px 3px 3px #aaa;
 }
 
 .paginate a.active {
@@ -36,6 +37,8 @@
 }
 
 .paginate .current {
-  background: #56aaff;
+  /* background: #56aaff; */
   font-weight: bold;
+  background-color: #56aaff;
+  box-shadow: 3px 3px 3px #56aaff;
 }

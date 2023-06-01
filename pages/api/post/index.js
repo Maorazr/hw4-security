@@ -1,6 +1,4 @@
-// import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from "../../../lib/prisma";
-import { Parse } from "./parseFormData";
 import Upload from "./uploadVideo";
 import uploadMeta from "../../../lib/mongo";
 const formidable = require("formidable");

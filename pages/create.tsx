@@ -19,6 +19,7 @@ const Draft: React.FC = () => {
     await submitPost(title, content, session, email, file);
     setIsLoading(false);
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
@@ -62,7 +63,14 @@ const Draft: React.FC = () => {
           align-items: center;
         }
 
-        input[type="text"],
+        input[type="text"] {
+          bold: 1px solid #ececec;
+          width: 25%;
+          border: 0.125rem solid rgba(0, 0, 0, 0.2);
+          border-radius: 0.25rem;
+          padding: 0.3rem;
+          margin: 0.5rem 0;
+        }
         textarea {
           width: 100%;
           padding: 0.5rem;

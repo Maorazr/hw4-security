@@ -3,9 +3,30 @@ import Layout from "../components/Layout";
 import Post from "../components/Post";
 import Paginate from "../components/Paginate.jsx";
 import { usePosts } from "../hooks/usePosts";
+import { prisma } from "../lib/prisma";
 
-const Blog = () => {
-  const { posts, currentPage, totalPages, setCurrentPage } = usePosts(1);
+export const getServerSideProps = async ({ query }) => {
+  const page = Number(query.page) || 1;
+  const postsPerPage = 10;
+
+  const feed = await prisma.post.findMany({
+    where: { published: true },
+    include: { author: { select: { name: true } } },
+    take: postsPerPage,
+    skip: (page - 1) * postsPerPage,
+    orderBy: { id: "desc" },
+  });
+
+  const totalPosts = await prisma.post.count({ where: { published: true } });
+
+  return {
+    props: { initialData: { posts: feed, count: totalPosts } },
+  };
+};
+
+const Blog = ({ initialData }) => {
+  const { posts, currentPage, totalPages, setCurrentPage } =
+    usePosts(initialData);
 
   return (
     <Layout>
@@ -32,7 +53,7 @@ const Blog = () => {
         }
 
         .post:hover {
-          box-shadow: 2px 2px 3px #aaa;
+          box-shadow: 3px 3px 3px #aaa;
         }
 
         .post + .post {

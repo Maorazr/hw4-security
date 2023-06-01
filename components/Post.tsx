@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
-
+import { useTheme } from "../hooks/useTheme";
 export type PostProps = {
   id: number;
   title: string;
@@ -15,9 +15,18 @@ export type PostProps = {
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
+  const { theme } = useTheme();
   const authorName = post.author ? post.author.name : "Unknown author";
+  const isDark = theme === "dark";
+  const postStyles = {
+    backgroundColor: isDark ? "#333" : "white",
+    color: isDark ? "white" : "black",
+  };
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+    <div
+      onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
+      style={postStyles}
+    >
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       <ReactMarkdown children={post.content} />
@@ -31,7 +40,6 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
 
       <style jsx>{`
         div {
-          color: inherit;
           padding: 2rem;
         }
       `}</style>

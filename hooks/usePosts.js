@@ -1,27 +1,30 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-export const usePosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const postsPerPage = 10;
+export const usePosts = (initialPage = 1, initialPosts = []) => {
+  const [posts, setPosts] = useState(initialPosts);
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil((initialPosts.length || 0) / 10)
+  );
   const router = useRouter();
-
+  const postsPerPage = 10;
   // Extract the current page number from the URL
   const currentPage = parseInt(router.query.page) || 1;
 
   useEffect(() => {
-    fetch(`/api/post?page=${currentPage}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!Array.isArray(data.posts)) {
-          throw new Error("Invalid data");
-        }
-        setPosts(data.posts);
-        const pages = Math.ceil(data.count / postsPerPage);
-        setTotalPages(pages);
-      })
-      .catch((error) => console.error(error));
+    if (initialPosts.length === 0 || currentPage !== initialPage) {
+      fetch(`/api/post?page=${currentPage}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (!Array.isArray(data.posts)) {
+            throw new Error("Invalid data");
+          }
+          setPosts(data.posts);
+          const pages = Math.ceil(data.count / postsPerPage);
+          setTotalPages(pages);
+        })
+        .catch((error) => console.error(error));
+    }
   }, [currentPage]);
 
   const setCurrentPage = (page) => {
