@@ -16,7 +16,13 @@
     "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Header.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/Header.jsx",
+    "pages/api/auth/register.js"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

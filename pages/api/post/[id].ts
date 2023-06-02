@@ -1,26 +1,36 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react';
-import prisma from '../../../lib/prisma'
+import type { NextApiResponse } from "next";
+import type { NextApiRequest as NetxReq } from "next";
+import prisma from "../../../lib/prisma";
+import validateJWT from "../middleware/validateJWT";
 
+interface NextApiRequest extends NetxReq {
+  userId?: Number;
+}
 
 // DELETE /api/post/:id
-export default async function handle(req: NextApiRequest, res: NextApiResponse) {
+export default validateJWT(async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const postId = req.query.id;
-
-  const session = await getSession({ req })
+  const userId = req.userId;
 
   if (req.method === "DELETE") {
-    if (session) {
-      const post = await prisma.post.delete({
-        where: { id: Number(postId) },
-      });
-      res.json(post);
-    } else {
-      res.status(401).send({ message: 'Unauthorized' })
+    // Check if the user is the author of the post before deleting
+    const post = await prisma.post.findUnique({
+      where: { id: Number(postId) },
+    });
+    if (!post || post.authorId !== userId) {
+      return res.status(401).send({ message: "Unauthorized" });
     }
+
+    await prisma.post.delete({
+      where: { id: Number(postId) },
+    });
+    res.json(post);
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
     );
   }
-}
+});

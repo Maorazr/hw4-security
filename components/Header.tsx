@@ -77,7 +77,7 @@ const RightSection: React.FC<SectionProps> = ({
   if (!session) {
     return (
       <div className={classes.right}>
-        <HeaderLink href="/api/auth/signin" isActive={isActive}>
+        <HeaderLink href="/api/auth/login" isActive={isActive}>
           Log in
         </HeaderLink>
       </div>
