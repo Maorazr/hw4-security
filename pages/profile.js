@@ -1,5 +1,5 @@
 import { useAuth } from "../hooks/useAuth";
-import styles from "../styles/Profile.module.css";
+
 import ProfilePage from "../components/ProfilePage";
 const Profile = () => {
   const { user, loading } = useAuth();
