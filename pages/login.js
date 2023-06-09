@@ -4,7 +4,7 @@ import styles from "../styles/Form.module.css";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [userNameOrEmail, setUserNameOrEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ userNameOrEmail, password }),
       });
 
       console.log(response);
@@ -33,13 +33,13 @@ export default function Login() {
     <div className={styles.formContainer}>
       <h2>Login</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="usernameOrEmail">Username or Email</label>
         <input
-          type="email"
-          id="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          id="usernameOrEmail"
+          placeholder="Username or Email"
+          value={userNameOrEmail}
+          onChange={(e) => setUserNameOrEmail(e.target.value)}
           className={styles.formInput}
         />
         <label htmlFor="password">Password</label>

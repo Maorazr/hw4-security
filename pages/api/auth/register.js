@@ -4,21 +4,34 @@ const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 
 async function handle(req, res) {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  // const { name, email, password } = req.body;
+  // if (!name || !email || !password) {
+  //   return res.status(400).json({ message: "All fields are required." });
+  // }
+
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
-  const existingUser = await prisma.user.findUnique({
+  const existingUserByUsername = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
+  const existingUserByEmail = await prisma.user.findUnique({
     where: {
       email: email,
     },
   });
 
+  const existingUser = existingUserByUsername || existingUserByEmail;
+
   if (existingUser) {
     return res
       .status(409)
-      .json({ message: "User with this email already exists." });
+      .json({ message: "User with this email or username already exists." });
   }
 
   try {
@@ -26,16 +39,23 @@ async function handle(req, res) {
 
     const hash = bcrypt.hashSync(password, salt);
 
+    // const result = await prisma.user.create({
+    //   data: {
+    //     name: name,
+    //     email: email,
+    //     password: hash,
+    //   },
+    // });
     const result = await prisma.user.create({
       data: {
-        name: name,
+        username: username,
         email: email,
         password: hash,
       },
     });
 
     const token = jwt.sign(
-      { userId: result.id, email: result.email },
+      { userId: result.id, email: result.email, username: result.username }, /// added username
       process.env.JWT_SECRET,
       {
         expiresIn: "1d",
@@ -47,7 +67,7 @@ async function handle(req, res) {
       cookie.serialize("auth", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development", // use HTTPS in production
-        maxAge: 86400, // 1 hour
+        maxAge: 86400, // 1d
         sameSite: "strict",
         path: "/",
       })

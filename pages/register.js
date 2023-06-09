@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
 
+// changed every instance of name to username
+
 export default function Register() {
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -17,7 +19,7 @@ export default function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
       if (response.ok) {
         router.push("/");
@@ -40,9 +42,9 @@ export default function Register() {
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="userName"
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
           className={styles.formInput}
         />
         <input

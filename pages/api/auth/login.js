@@ -2,35 +2,43 @@ import prisma from "../../../lib/prisma";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const cookie = require("cookie");
-import validateJWT from "../middleware/validateJWT";
 
 async function handle(req, res) {
-  const { email, password } = req.body;
+  const { userNameOrEmail, password } = req.body;
 
-  if (!email || !password) {
+  if (!userNameOrEmail || !password) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  let user;
+  if (userNameOrEmail.includes("@")) {
+    user = await prisma.user.findUnique({
+      where: {
+        email: userNameOrEmail,
+      },
+    });
+  } else {
+    user = await prisma.user.findUnique({
+      where: {
+        username: userNameOrEmail,
+      },
+    });
+  }
 
-  if (!existingUser) {
+  if (!user) {
     return res
       .status(409)
       .json({ message: "User with this email does not exist." });
   }
 
-  const validPassword = await bcrypt.compare(password, existingUser.password);
+  const validPassword = await bcrypt.compare(password, user.password);
 
   if (!validPassword) {
     return res.status(409).json({ message: "Invalid Password." });
   }
 
   const token = jwt.sign(
-    { userId: existingUser.id, email: existingUser.email },
+    { userId: user.id, email: user.email, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
