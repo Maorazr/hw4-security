@@ -38,7 +38,12 @@ async function handle(req, res) {
   }
 
   const token = jwt.sign(
-    { userId: user.id, email: user.email, username: user.username },
+    {
+      userId: user.id,
+      email: user.email,
+      username: user.username,
+      name: user.name,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );

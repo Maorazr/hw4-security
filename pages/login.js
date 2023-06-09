@@ -18,7 +18,6 @@ export default function Login() {
         body: JSON.stringify({ userNameOrEmail, password }),
       });
 
-      console.log(response);
       if (!response.ok) {
         throw new Error("Response was not OK");
       }

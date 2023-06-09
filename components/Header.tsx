@@ -62,6 +62,9 @@ const LeftSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
       <HeaderLink href="/drafts" isActive={isActive}>
         My drafts
       </HeaderLink>
+      <HeaderLink href="/profile" isActive={isActive}>
+        My profile
+      </HeaderLink>
     </div>
   );
 };
