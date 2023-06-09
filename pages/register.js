@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
 
-// changed every instance of name to username
-
 export default function Register() {
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
@@ -25,14 +23,12 @@ export default function Register() {
       if (response.ok) {
         router.push("/");
       }
-      // After successful registration, you might want to redirect the user to the login page
-      // using router.push('/login');
+
       if (!response.ok) {
         console.error(`Response: ${response.status} ${response.statusText}`);
         throw new Error("Response was not OK in register.js");
       }
     } catch (error) {
-      // Handle error here
       console.error(error);
     }
   };

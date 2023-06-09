@@ -13,7 +13,7 @@ const submitPost = async (title, content, email, file) => {
     const response = await fetch(`/api/post`, {
       method: "POST",
       body: formData,
-      credentials: "include", // This is needed to send the cookies with the request
+      credentials: "include",
     });
 
     if (!response.ok) {

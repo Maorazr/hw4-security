@@ -55,6 +55,7 @@ type Props = {
 };
 const Drafts: React.FC<Props> = (props) => {
   const { drafts, email } = props;
+
   if (!email) {
     return (
       <Layout>

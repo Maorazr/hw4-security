@@ -1,4 +1,5 @@
 const cloudinary = require("cloudinary").v2;
+const { v4: uuidv4 } = require("uuid");
 
 cloudinary.config({
   cloud_name: "dhl4ej1ci",
@@ -6,11 +7,11 @@ cloudinary.config({
   api_secret: "FW-0Yi_hI0cHr2Y4W710ydtb5i0",
 });
 
-const Upload = async (file) => {
-  const videoPath = file.filepath;
-  const response = await cloudinary.uploader.upload(videoPath, {
-    resource_type: "video",
-    public_id: "my_video",
+const Upload = async (file, resourceType) => {
+  const filePath = file.filepath;
+  const response = await cloudinary.uploader.upload(filePath, {
+    resource_type: resourceType,
+    public_id: uuidv4(),
   });
   return response;
 };

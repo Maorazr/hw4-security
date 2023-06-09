@@ -13,7 +13,6 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
   const userId = req.userId;
 
   if (req.method === "DELETE") {
-    // Check if the user is the author of the post before deleting
     const post = await prisma.post.findUnique({
       where: { id: Number(postId) },
     });

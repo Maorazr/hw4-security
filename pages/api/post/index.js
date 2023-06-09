@@ -50,11 +50,11 @@ async function createPost(req, res) {
     let postData = {
       title: title,
       content: content,
-      author: { connect: { id: req.userId } }, // we're now getting the user id from the JWT
+      author: { connect: { id: req.userId } },
     };
 
     if (files?.file?.filepath) {
-      response = await Upload(files.file);
+      response = await Upload(files.file, "video");
       postData["videoUrl"] = response.url;
     }
 

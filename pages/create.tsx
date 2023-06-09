@@ -22,7 +22,7 @@ const Draft: React.FC = () => {
       if (authToken) {
         setToken(authToken);
       }
-      // whether token is found or not, stop loading
+
       setIsLoading(false);
     }
   }, []);
@@ -94,7 +94,7 @@ const Draft: React.FC = () => {
             >
               Create
             </Button>
-            {/* <input disabled={!content || !title} type="submit" value="Create" /> */}
+
             <Button
               onClick={() => Router.push("/")}
               variant="contained"
@@ -106,9 +106,6 @@ const Draft: React.FC = () => {
             >
               Cancel
             </Button>
-            {/* <a className="back" href="#" onClick={() => Router.push("/")}>
-              or Cancel
-            </a> */}
           </form>
         </div>
       )}
