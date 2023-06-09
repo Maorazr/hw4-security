@@ -5,6 +5,7 @@ import styles from "../styles/Form.module.css";
 // changed every instance of name to username
 
 export default function Register() {
+  const [name, setName] = useState("");
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,7 @@ export default function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ name, username, email, password }),
       });
       if (response.ok) {
         router.push("/");
@@ -40,6 +41,14 @@ export default function Register() {
     <div className={styles.formContainer}>
       <h2>Register</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={styles.formInput}
+        />
         <input
           type="text"
           placeholder="userName"

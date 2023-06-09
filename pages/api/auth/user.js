@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../lib/prisma";
 import validateJWT from "../middleware/validateJWT";
 
-const prisma = new PrismaClient();
 async function handle(req, res) {
   try {
     const user = await prisma.user.findUnique({

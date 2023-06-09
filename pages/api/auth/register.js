@@ -4,13 +4,8 @@ const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 
 async function handle(req, res) {
-  // const { name, email, password } = req.body;
-  // if (!name || !email || !password) {
-  //   return res.status(400).json({ message: "All fields are required." });
-  // }
-
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
+  const { name, username, email, password } = req.body;
+  if (!name || !username || !email || !password) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
@@ -39,15 +34,9 @@ async function handle(req, res) {
 
     const hash = bcrypt.hashSync(password, salt);
 
-    // const result = await prisma.user.create({
-    //   data: {
-    //     name: name,
-    //     email: email,
-    //     password: hash,
-    //   },
-    // });
     const result = await prisma.user.create({
       data: {
+        name: name,
         username: username,
         email: email,
         password: hash,
