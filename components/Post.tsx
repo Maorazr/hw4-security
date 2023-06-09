@@ -5,13 +5,15 @@ import { useTheme } from "../hooks/useTheme";
 export type PostProps = {
   id: number;
   title: string;
+  content: string;
+  published: boolean;
+  authorId: number;
   author: {
     name: string;
     email: string;
-  } | null;
-  content: string;
-  published: boolean;
-  videoUrl: string | null;
+  };
+  videoUrl?: string;
+  userId?: number;
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {

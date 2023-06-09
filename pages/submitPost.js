@@ -1,24 +1,26 @@
 import Router from "next/router";
 
-const submitPost = async (title, content, session, email, file) => {
+const submitPost = async (title, content, email, file) => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
-  if (session) {
-    formData.append("session", JSON.stringify(session));
-  }
   formData.append("email", email || "");
   if (file) {
-    console.log("file exists");
     formData.append("file", file);
   }
 
   try {
-    await fetch(`/api/post`, {
+    const response = await fetch(`/api/post`, {
       method: "POST",
       body: formData,
+      credentials: "include", // This is needed to send the cookies with the request
     });
-    await Router.push("/drafts");
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    Router.push("/drafts");
   } catch (error) {
     console.error(error);
   }

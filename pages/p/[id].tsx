@@ -5,13 +5,22 @@ import Layout from "../../components/Layout";
 import Router from "next/router";
 import { PostProps } from "../../components/Post";
 import prisma from "../../lib/prisma";
-import { useSession } from "next-auth/react";
 import Button from "@mui/material/Button";
+const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = cookie.parse(context.req.headers.cookie || "");
+  const token = cookies["auth"];
+  let userId = null;
+  if (token) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    userId = decoded.userId;
+  }
+
   const post = await prisma.post.findUnique({
     where: {
-      id: Number(params?.id) || -1,
+      id: Number(context.params?.id) || -1,
     },
     include: {
       author: {
@@ -20,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
   return {
-    props: post ?? { author: { name: "Me" } },
+    props: { ...post, userId: userId },
   };
 };
 
@@ -39,17 +48,11 @@ async function deletePost(id: number): Promise<void> {
 }
 
 const Post: React.FC<PostProps> = (props) => {
-  const { data: session, status } = useSession();
-  if (status === "loading") {
-    return <div>Authenticating ...</div>;
-  }
-  const userHasValidSession = Boolean(session);
-  const postBelongsToUser = session?.user?.email === props.author?.email;
+  const postBelongsToUser = props.userId === props.authorId;
   let title = props.title;
   if (!props.published) {
     title = `${title} (Draft)`;
   }
-
   return (
     <Layout>
       <div>
@@ -63,8 +66,7 @@ const Post: React.FC<PostProps> = (props) => {
             style={{ maxWidth: "100%", maxHeight: "400px" }}
           ></video>
         )}
-        {!props.published && userHasValidSession && postBelongsToUser && (
-          // <button onClick={() => publishPost(props.id)}>Publish</button>
+        {!props.published && postBelongsToUser && (
           <Button
             variant="contained"
             onClick={() => publishPost(props.id)}
@@ -73,8 +75,7 @@ const Post: React.FC<PostProps> = (props) => {
             Publish
           </Button>
         )}
-        {userHasValidSession && postBelongsToUser && (
-          // <button onClick={() => deletePost(props.id)}>Delete</button>
+        {postBelongsToUser && (
           <Button
             variant="contained"
             onClick={() => deletePost(props.id)}

@@ -1,9 +1,10 @@
 import prisma from "../../../lib/prisma";
-import bcrypt from "bcryptjs";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookie = require("cookie");
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const { name, email, password } = req.body;
-
   if (!name || !email || !password) {
     return res.status(400).json({ message: "All fields are required." });
   }
@@ -22,7 +23,9 @@ export default async function handle(req, res) {
 
   try {
     const salt = bcrypt.genSaltSync(10);
+
     const hash = bcrypt.hashSync(password, salt);
+
     const result = await prisma.user.create({
       data: {
         name: name,
@@ -30,10 +33,31 @@ export default async function handle(req, res) {
         password: hash,
       },
     });
+
+    const token = jwt.sign(
+      { userId: result.id, email: result.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.setHeader(
+      "Set-Cookie",
+      cookie.serialize("auth", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development", // use HTTPS in production
+        maxAge: 86400, // 1 hour
+        sameSite: "strict",
+        path: "/",
+      })
+    );
+
     res.status(200).json(result);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Something went wrong during registration." });
+    console.error(error);
+    res.status(500).json({ message: `Registration error: ${error.message}` });
   }
 }
+
+export default handle;

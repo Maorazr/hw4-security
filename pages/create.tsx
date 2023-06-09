@@ -1,26 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
-import { useSession } from "next-auth/react";
 import submitPost from "./submitPost";
 import Spinner from "../components/Spinner";
 import Button from "@mui/material/Button";
+
+const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
-  let email = session?.user?.email;
+  const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const cookies = cookie.parse(document.cookie);
+      const authToken = cookies.auth;
+      if (authToken) {
+        setToken(authToken);
+      }
+      // whether token is found or not, stop loading
+      setIsLoading(false);
+    }
+  }, []);
+  let decodedToken;
+  let email: string | undefined;
+
+  if (token) {
+    try {
+      decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      email = decodedToken?.email;
+    } catch (error) {
+      console.error("Error verifying token: ", error);
+    }
+  }
 
   const submitData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    await submitPost(title, content, session, email, file);
+    await submitPost(title, content, email, file);
     setIsLoading(false);
   };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);

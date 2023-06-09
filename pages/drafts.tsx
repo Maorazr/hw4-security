@@ -2,19 +2,38 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
-import { useSession, getSession } from "next-auth/react";
 import prisma from "../lib/prisma";
+const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getSession({ req });
-  if (!session) {
-    res.statusCode = 403;
-    return { props: { drafts: [] } };
+  const cookies = cookie.parse(req.headers.cookie || "");
+  const token = cookies["auth"];
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
   }
+  let decodedToken;
+  try {
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const { email } = decodedToken;
 
   const drafts = await prisma.post.findMany({
     where: {
-      author: { email: session.user?.email },
+      author: { email: email },
       published: false,
     },
     orderBy: { id: "desc" },
@@ -24,19 +43,19 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       },
     },
   });
+
   return {
-    props: { drafts },
+    props: { drafts, email: decodedToken.email },
   };
 };
 
 type Props = {
   drafts: PostProps[];
+  email: string | null;
 };
-
 const Drafts: React.FC<Props> = (props) => {
-  const { data: session } = useSession();
-
-  if (!session) {
+  const { drafts, email } = props;
+  if (!email) {
     return (
       <Layout>
         <h1>My Drafts</h1>
@@ -50,7 +69,7 @@ const Drafts: React.FC<Props> = (props) => {
       <div className="page">
         <h1>My Drafts</h1>
         <main>
-          {props.drafts.map((post) => (
+          {drafts.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>

@@ -1,20 +1,28 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
+const cookie = require("cookie");
 
-const validateJET = async (req, res, next) => {
-  const token = req.headers["authorization"];
+const validateJWT = (handler) => (req, res) => {
+  return new Promise((resolve, reject) => {
+    const cookies = cookie.parse(req.headers.cookie || "");
+    const token = cookies["auth"];
 
-  if (!token) {
-    return res.status(401).json({ message: "Missing token." });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token." });
+    if (!token) {
+      res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action." });
+      return resolve();
     }
 
-    req.userId = decoded.userId;
-    next();
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        res.status(401).json({ message: "Invalid token." });
+        return resolve();
+      }
+
+      req.userId = decoded.userId;
+      resolve(handler(req, res));
+    });
   });
 };
 
-export default validateJET;
+export default validateJWT;

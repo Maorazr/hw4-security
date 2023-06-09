@@ -1,8 +1,10 @@
 import prisma from "../../../lib/prisma";
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const cookie = require("cookie");
+import validateJWT from "../middleware/validateJWT";
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -33,5 +35,18 @@ export default async function handle(req, res) {
     { expiresIn: "1d" }
   );
 
-  res.status(200).json({ token });
+  res.setHeader(
+    "Set-Cookie",
+    cookie.serialize("auth", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 86400,
+      path: "/",
+    })
+  );
+
+  res.status(200).json({ message: "Login successful." });
 }
+
+export default handle;

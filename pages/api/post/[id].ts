@@ -8,10 +8,7 @@ interface NextApiRequest extends NetxReq {
 }
 
 // DELETE /api/post/:id
-export default validateJWT(async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function handle(req: NextApiRequest, res: NextApiResponse) {
   const postId = req.query.id;
   const userId = req.userId;
 
@@ -33,4 +30,6 @@ export default validateJWT(async function handle(
       `The HTTP ${req.method} method is not supported at this route.`
     );
   }
-});
+}
+
+export default validateJWT(handle);
