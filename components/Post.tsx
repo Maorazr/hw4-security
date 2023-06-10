@@ -2,6 +2,7 @@ import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 import { useTheme } from "../hooks/useTheme";
+import styles from "./Post.module.css";
 export type PostProps = {
   id: number;
   title: string;
@@ -11,6 +12,7 @@ export type PostProps = {
   author: {
     name: string;
     email: string;
+    profilePic: string;
   };
   videoUrl?: string;
   userId?: number;
@@ -19,16 +21,21 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const { theme } = useTheme();
   const authorName = post.author ? post.author.name : "Unknown author";
+  const authorProfilePic = post.author ? post.author.profilePic : "";
   const isDark = theme === "dark";
   const postStyles = {
     backgroundColor: isDark ? "#333" : "white",
     color: isDark ? "white" : "black",
   };
+
   return (
     <div
       onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
       style={postStyles}
     >
+      {authorProfilePic && (
+        <img src={authorProfilePic} className={styles.profilePic} />
+      )}
       {post.videoUrl && (
         <img
           src="/icons8-video-25.png"

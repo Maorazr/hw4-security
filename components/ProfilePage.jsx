@@ -75,7 +75,7 @@ const ProfilePage = (props) => {
           )}
           {selceted && (
             <button className={styles.button} type="submit">
-              Update Profile
+              Update Photo
             </button>
           )}
           {selceted && (
