@@ -38,9 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
     orderBy: { id: "desc" },
     include: {
-      author: {
-        select: { name: true },
-      },
+      author: true,
     },
   });
 

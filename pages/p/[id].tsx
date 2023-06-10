@@ -23,9 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.id) || -1,
     },
     include: {
-      author: {
-        select: { name: true, email: true },
-      },
+      author: true,
     },
   });
   return {
@@ -49,6 +47,7 @@ async function deletePost(id: number): Promise<void> {
 
 const Post: React.FC<PostProps> = (props) => {
   const postBelongsToUser = props.userId === props.authorId;
+  let profilePic = props.author?.profilePic;
   let title = props.title;
   if (!props.published) {
     title = `${title} (Draft)`;
@@ -56,6 +55,17 @@ const Post: React.FC<PostProps> = (props) => {
   return (
     <Layout>
       <div>
+        {profilePic && (
+          <img
+            src={profilePic}
+            alt="profile"
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+            }}
+          />
+        )}
         <h2>{title}</h2>
         <p>By {props?.author?.name || "Unknown author"}</p>
         <ReactMarkdown children={props.content} />
@@ -66,6 +76,7 @@ const Post: React.FC<PostProps> = (props) => {
             style={{ maxWidth: "100%", maxHeight: "400px" }}
           ></video>
         )}
+
         {!props.published && postBelongsToUser && (
           <Button
             variant="contained"
