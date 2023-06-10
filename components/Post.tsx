@@ -20,13 +20,13 @@ export type PostProps = {
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const { theme } = useTheme();
-  const authorName = post.author ? post.author.name : "Unknown author";
-  const authorProfilePic = post.author ? post.author.profilePic : "";
   const isDark = theme === "dark";
   const postStyles = {
     backgroundColor: isDark ? "#333" : "white",
     color: isDark ? "white" : "black",
   };
+  const authorName = post.author ? post.author.name : "Unknown author";
+  const authorProfilePic = post.author ? post.author.profilePic : "";
 
   return (
     <div

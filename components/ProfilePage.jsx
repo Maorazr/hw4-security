@@ -2,16 +2,25 @@ import styles from "./ProfilePage.module.css";
 import Layout from "./Layout";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import { set } from "mongoose";
+import { useTheme } from "../hooks/useTheme";
 
-const ProfileCard = ({ label, value }) => (
+const ProfileCard = ({ label, value, profileStyles }) => (
   <div className={styles.profileCard}>
-    <div className={styles.label}>{label}</div>
-    <div className={styles.value}>{value}</div>
+    <div className={styles.label} style={{ ...profileStyles }}>
+      {label}
+    </div>
+    <div className={styles.value} style={{ ...profileStyles }}>
+      {value}
+    </div>
   </div>
 );
 
 const ProfilePage = (props) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const profileStyles = {
+    color: isDark ? "white" : "black",
+  };
   const user = props.user;
   const [selectedFile, setSelectedFile] = useState();
   const [profileImage, setProfileImage] = useState(user.profilePic);
@@ -55,15 +64,10 @@ const ProfilePage = (props) => {
   return (
     <Layout user={user}>
       <div className={styles.profilePageContainer}>
-        <h1>Profile</h1>
-        <img
-          src={profileImage}
-          alt="Profile"
-          className={styles.profilePicture}
-        />
+        <img src={profileImage} className={styles.profilePicture} />
         <form className={styles.form} onSubmit={handleSubmit}>
           {!selceted && (
-            <label className={styles.label2}>
+            <label className={styles.label2} style={profileStyles}>
               Edit
               <input
                 type="file"
@@ -85,9 +89,21 @@ const ProfilePage = (props) => {
             </button>
           )}
         </form>
-        <ProfileCard label="Name:" value={user.name} />
-        <ProfileCard label="Email:" value={user.email} />
-        <ProfileCard label="Username:" value={user.username} />
+        <ProfileCard
+          label="Name:"
+          value={user.name}
+          profileStyles={profileStyles}
+        />
+        <ProfileCard
+          label="Email:"
+          value={user.email}
+          profileStyles={profileStyles}
+        />
+        <ProfileCard
+          label="Username:"
+          value={user.username}
+          profileStyles={profileStyles}
+        />
       </div>
     </Layout>
   );
