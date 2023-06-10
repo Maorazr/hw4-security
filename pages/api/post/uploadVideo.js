@@ -10,6 +10,7 @@ cloudinary.config({
 const Upload = async (file, resourceType) => {
   const filePath = file.filepath;
   const response = await cloudinary.uploader.upload(filePath, {
+    folder: "Blog/Videos",
     resource_type: resourceType,
     public_id: uuidv4(),
   });

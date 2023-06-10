@@ -40,6 +40,8 @@ async function handle(req, res) {
         username: username,
         email: email,
         password: hash,
+        profilePic:
+          "https://res.cloudinary.com/dhl4ej1ci/image/upload/v1686382067/Blog/ProfilePic/Default_pfp_x11n6t.png",
       },
     });
 

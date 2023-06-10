@@ -11,8 +11,10 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 15px;
   border-bottom: 1px solid #eee;
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
 }
 
 .label {
@@ -22,4 +24,30 @@
 
 .value {
   color: #777;
+}
+
+.profilePicture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+}
+
+.input[type="file"] {
+  display: none;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+.label2 {
+  font-weight: bold;
+  color: #333;
+  border: #333 2px solid;
+  border-radius: 10px;
+  padding-right: 3px;
+}
+
+.button {
+  border-radius: 10px;
 }

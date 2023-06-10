@@ -1,6 +1,8 @@
 const cloudinary = require("cloudinary").v2;
 const { v4: uuidv4 } = require("uuid");
 const formidable = require("formidable");
+import ValidateJWT from "./middleware/validateJWT";
+import prisma from "../../lib/prisma";
 
 export const config = {
   api: {
@@ -14,7 +16,7 @@ cloudinary.config({
   api_secret: "FW-0Yi_hI0cHr2Y4W710ydtb5i0",
 });
 
-export default async function handler(req, res) {
+const uploadImage = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).send({ message: "Method not allowed" });
   }
@@ -29,10 +31,22 @@ export default async function handler(req, res) {
     const file = files.file;
 
     const response = await cloudinary.uploader.upload(file.filepath, {
+      folder: "Blog/ProfilePic",
       resource_type: "image",
       public_id: uuidv4(),
     });
 
+    if (!response) {
+      return res.status(500).json({ message: "Something went wrong." });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: req.userId }, // user's ID
+      data: { profilePic: response.url }, // URL of the uploaded image
+    });
+
     res.status(200).json(response);
   });
-}
+};
+
+export default ValidateJWT(uploadImage);
