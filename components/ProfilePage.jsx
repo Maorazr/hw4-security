@@ -2,6 +2,7 @@ import styles from "./ProfilePage.module.css";
 import Layout from "./Layout";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { set } from "mongoose";
 
 const ProfileCard = ({ label, value }) => (
   <div className={styles.profileCard}>
@@ -14,11 +15,17 @@ const ProfilePage = (props) => {
   const user = props.user;
   const [selectedFile, setSelectedFile] = useState();
   const [profileImage, setProfileImage] = useState(user.profilePic);
+  const [selceted, setSelected] = useState(false);
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
+    setSelected(true);
+  };
+  const handleDiscard = () => {
+    setSelectedFile("");
+    setSelected(false);
   };
   const handleSubmit = async (e) => {
-    console.log(user);
+    setSelected(false);
     e.preventDefault();
     if (selectedFile) {
       const formData = new FormData();
@@ -54,24 +61,33 @@ const ProfilePage = (props) => {
           alt="Profile"
           className={styles.profilePicture}
         />
-        <ProfileCard label="Name" value={user.name} />
-        <ProfileCard label="Email" value={user.email} />
-        <ProfileCard label="Username" value={user.username} />
-
-        <form onSubmit={handleSubmit}>
-          <label className={styles.label2}>
-            Edit Profile Picture
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className={styles.input}
-            />
-          </label>
-          <button className={styles.button} type="submit">
-            Update Profile
-          </button>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          {!selceted && (
+            <label className={styles.label2}>
+              Edit
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className={styles.input}
+              />
+            </label>
+          )}
+          {selceted && (
+            <button className={styles.button} type="submit">
+              Update Profile
+            </button>
+          )}
+          {selceted && (
+            <button className={styles.button} onClick={handleDiscard}>
+              {" "}
+              Discard{" "}
+            </button>
+          )}
         </form>
+        <ProfileCard label="Name:" value={user.name} />
+        <ProfileCard label="Email:" value={user.email} />
+        <ProfileCard label="Username:" value={user.username} />
       </div>
     </Layout>
   );
