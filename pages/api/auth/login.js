@@ -26,13 +26,13 @@ async function handle(req, res) {
   }
 
   if (!user) {
-    return res.status(409).json({ message: "User does not exist." });
+    return res.status(404).json({ message: "User does not exist." });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
 
   if (!validPassword) {
-    return res.status(409).json({ message: "Invalid Password." });
+    return res.status(401).json({ message: "Invalid Password." });
   }
 
   const token = jwt.sign(

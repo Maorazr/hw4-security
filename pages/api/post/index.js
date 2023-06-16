@@ -72,7 +72,7 @@ async function createPost(req, res) {
       );
     }
 
-    res.json(post);
+    res.status(201).json(post);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: `Post creation error: ${error.message}` });

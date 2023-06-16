@@ -71,7 +71,7 @@ async function handle(req, res) {
       })
     );
 
-    res.status(200).json(result);
+    res.status(201).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: `Registration error: ${error.message}` });

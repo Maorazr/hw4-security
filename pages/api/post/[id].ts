@@ -16,6 +16,7 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
     const post = await prisma.post.findUnique({
       where: { id: Number(postId) },
     });
+
     if (!post || post.authorId !== userId) {
       return res.status(401).send({ message: "Unauthorized" });
     }
@@ -23,7 +24,8 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
     await prisma.post.delete({
       where: { id: Number(postId) },
     });
-    res.json(post);
+
+    return res.status(204).end();
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
