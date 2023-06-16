@@ -12,6 +12,22 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!name || !username || !email || !password) {
+      alert("All fields are required.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Invalid email address.");
+      return;
+    }
+
+    if (password.length < 8) {
+      alert("Password must be at least 8 characters long");
+      return;
+    }
+
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -22,11 +38,11 @@ export default function Register() {
       });
       if (response.ok) {
         router.push("/");
-      }
-
-      if (!response.ok) {
-        console.error(`Response: ${response.status} ${response.statusText}`);
-        throw new Error("Response was not OK in register.js");
+      } else {
+        const data = await response.json();
+        alert(data.message);
+        // console.error(`Response: ${response.status} ${response.statusText}`);
+        // throw new Error("Response was not OK in register.js");
       }
     } catch (error) {
       console.error(error);

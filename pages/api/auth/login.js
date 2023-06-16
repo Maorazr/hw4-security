@@ -26,9 +26,7 @@ async function handle(req, res) {
   }
 
   if (!user) {
-    return res
-      .status(409)
-      .json({ message: "User with this email does not exist." });
+    return res.status(409).json({ message: "User does not exist." });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);

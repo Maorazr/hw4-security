@@ -1,6 +1,6 @@
 import { useAuth } from "../hooks/useAuth";
 
-import ProfilePage from "../components/ProfilePage";
+import ProfilePage from "../components/Profile/index";
 const Profile = () => {
   const { user, loading } = useAuth();
 

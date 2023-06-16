@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
+import Layout from "../components/Layout/index";
+import Post, { PostProps } from "../components/Post/index";
 import prisma from "../lib/prisma";
 const cookie = require("cookie");
 const jwt = require("jsonwebtoken");

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import classes from "./Paginate.module.css";
-import { useTheme } from "../hooks/useTheme";
+import classes from "./styles.module.css";
+import { useTheme } from "../../../hooks/useTheme";
 
 const Page = (props) => {
   const theme = useTheme();

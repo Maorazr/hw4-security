@@ -9,6 +9,11 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!userNameOrEmail || !password) {
+      alert("All fields are required.");
+      return;
+    }
+
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -18,12 +23,14 @@ export default function Login() {
         body: JSON.stringify({ userNameOrEmail, password }),
       });
 
-      if (!response.ok) {
-        throw new Error("Response was not OK");
+      if (response.ok) {
+        router.push("/");
+      } else {
+        const data = await response.json();
+        alert(data.message);
       }
-      router.push("/");
     } catch (error) {
-      // Handle error here
+      throw new Error("Response was not OK");
       console.error(error);
     }
   };

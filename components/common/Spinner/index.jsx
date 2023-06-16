@@ -1,4 +1,4 @@
-import classes from "./Spinner.module.css";
+import classes from "./styels.module.css";
 
 const Spinner = () => {
   return (

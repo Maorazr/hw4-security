@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 
+const DEFAULT_PROFILE_PIC_URL =
+  "https://res.cloudinary.com/dhl4ej1ci/image/upload/v1686382067/Blog/ProfilePic/Default_pfp_x11n6t.png";
+
 async function handle(req, res) {
   const { name, username, email, password } = req.body;
   if (!name || !username || !email || !password) {
@@ -40,8 +43,7 @@ async function handle(req, res) {
         username: username,
         email: email,
         password: hash,
-        profilePic:
-          "https://res.cloudinary.com/dhl4ej1ci/image/upload/v1686382067/Blog/ProfilePic/Default_pfp_x11n6t.png",
+        profilePic: DEFAULT_PROFILE_PIC_URL,
       },
     });
 

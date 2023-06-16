@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ThemeToggleButton from "./ThemeToggleButton";
+import ThemeToggleButton from "../Theme/ThemeToggleButton";
 import Button from "@mui/material/Button";
 
-import classes from "./Header.module.css";
-import { useTheme } from "../hooks/useTheme";
-import { useAuth } from "../hooks/useAuth";
+import classes from "./styels.module.css";
+import { useTheme } from "../../hooks/useTheme";
+import { useAuth } from "../../hooks/useAuth";
 import { User } from "@prisma/client";
 
 type HeaderLinkProps = {

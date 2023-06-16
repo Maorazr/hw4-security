@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../components/Layout";
-import Post from "../components/Post";
-import Paginate from "../components/Paginate.jsx";
+import Layout from "../components/Layout/index";
+import Post from "../components/Post/index";
+import Paginate from "../components/common/Pagination/Paginate.jsx";
 import { usePosts } from "../hooks/usePosts";
 import { prisma } from "../lib/prisma";
 

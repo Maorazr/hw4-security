@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/index";
 import Router from "next/router";
 import submitPost from "./submitPost";
-import Spinner from "../components/Spinner";
+import Spinner from "../components/common/Spinner/index";
 import Button from "@mui/material/Button";
 
 const cookie = require("cookie");
