@@ -8,7 +8,20 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "NODE_ENV=test jest"
+  },
+  "transform": {
+    "^.+\\.[t|j]sx?$": "babel-jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "globalSetup": "./globalSetup.js",
+    "globalTeardown": "./globalTeardown.js",
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -20,12 +33,12 @@
     "cloudinary": "^1.37.0",
     "cookie": "^0.5.0",
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.0",
     "formidable": "^2.1.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "mongoose": "^7.2.1",
-    "next": "13.2.3",
     "next-superjson": "0.0.4",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.1",
@@ -37,6 +50,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
     "@babel/plugin-transform-runtime": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
@@ -44,9 +58,14 @@
     "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "18.14.2",
-    "@types/react": "18.0.28",
+    "@types/react": "^18.0.28",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "next": "^13.4.6",
     "prettier-plugin-prisma": "^4.10.0",
     "prisma": "4.11.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "4.9.5"
   },

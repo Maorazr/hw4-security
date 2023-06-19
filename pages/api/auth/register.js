@@ -53,18 +53,18 @@ async function handle(req, res) {
         email: result.email,
         username: result.username,
         name: result.name,
-      }, /// added username
+      },
       process.env.JWT_SECRET,
       {
         expiresIn: "1d",
       }
     );
-
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
     res.setHeader(
       "Set-Cookie",
       cookie.serialize("auth", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "development", // use HTTPS in production
+        secure: process.env.NODE_ENV !== "development",
         maxAge: 86400, // 1d
         sameSite: "strict",
         path: "/",

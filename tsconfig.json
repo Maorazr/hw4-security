@@ -21,7 +21,8 @@
     "**/*.ts",
     "**/*.tsx",
     "components/Header.jsx",
-    "pages/api/auth/register.js"
+    "pages/api/auth/register.js",
+    "__tests__/api/registration.test.js"
   ],
   "ts-node": {
     "compilerOptions": {
