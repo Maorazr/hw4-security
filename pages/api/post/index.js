@@ -2,7 +2,6 @@ import prisma from "../../../lib/prisma";
 import Upload from "./uploadVideo";
 import uploadMeta from "../../../lib/mongo";
 const formidable = require("formidable");
-import validateJWT from "../middleware/validateJWT";
 
 export const config = {
   api: {
@@ -31,6 +30,7 @@ async function getPosts(req, res) {
 }
 
 async function createPost(req, res) {
+  // Modified function to handle optional files
   try {
     const data = await new Promise((resolve, reject) => {
       const form = formidable({ multiples: true });
@@ -50,10 +50,11 @@ async function createPost(req, res) {
     let postData = {
       title: title,
       content: content,
-      author: { connect: { id: req.userId } },
+      //author: { connect: { id: req.userId } }, // Temporarily commented out to allow anonymous post creation
     };
 
     if (files?.file?.filepath) {
+      // Check if file is attached before processing it
       response = await Upload(files.file, "video");
       postData["videoUrl"] = response.url;
     }
@@ -79,12 +80,21 @@ async function createPost(req, res) {
   }
 }
 
+async function getAllPosts(req, res) {
+  const posts = await prisma.post.findMany({
+    include: { author: true },
+  });
+
+  res.json({ posts });
+}
+
 export default function handle(req, res) {
   switch (req.method) {
     case "GET":
-      return getPosts(req, res);
+      if (req.query.all) return getAllPosts(req, res);
+      else return getPosts(req, res);
     case "POST":
-      return validateJWT(createPost)(req, res);
+      return createPost(req, res);
     default:
       res.status(405).end();
       break;
