@@ -11,18 +11,6 @@
     "start": "next start",
     "test": "NODE_ENV=test jest"
   },
-  "transform": {
-    "^.+\\.[t|j]sx?$": "babel-jest"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "globalSetup": "./globalSetup.js",
-    "globalTeardown": "./globalTeardown.js",
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    }
-  },
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
