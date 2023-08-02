@@ -31,11 +31,14 @@ const Blog = ({ initialData }) => {
   return (
     <Layout>
       <div className="page">
-        <h1>Public Feed</h1>
+        <h1 className="text-4xl font-bold mb-4">Public Feed</h1>
         <main>
           {posts &&
             posts.map((post) => (
-              <div key={post.id} className="post">
+              <div
+                key={post.id}
+                className="post bg-white transition-shadow duration-100 ease-in-out hover:shadow-md mb-8"
+              >
                 <Post post={post} />
               </div>
             ))}
@@ -46,20 +49,6 @@ const Blog = ({ initialData }) => {
           />
         </main>
       </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 3px 3px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
     </Layout>
   );
 };

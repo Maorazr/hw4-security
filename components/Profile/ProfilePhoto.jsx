@@ -51,7 +51,10 @@ const ProfilePhoto = (props) => {
   return (
     <div>
       <div className={styles.profilePictureContainer} onClick={onImageClick}>
-        <img src={profileImage} className={styles.profilePicture} />
+        <img
+          src={profileImage}
+          className={`profilePicture ${styles.profilePicture}`}
+        />
         <input
           type="file"
           accept="image/*"
