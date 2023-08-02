@@ -2,6 +2,23 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
 
+const FormInput = ({ label, type, placeholder, value, setValue }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+      <label htmlFor={label} className="font-medium text-right sm:text-left">
+        {label}
+      </label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="border rounded-lg p-2"
+      />
+    </div>
+  );
+};
+
 export default function Register() {
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
@@ -48,41 +65,42 @@ export default function Register() {
       console.error(error);
     }
   };
-
   return (
-    <div className={styles.formContainer}>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="name">Name</label>
-        <input
+    <div className="flex flex-col w-full max-w-md mx-auto p-6 space-y-8 justify-center mt-40 shadow-lg">
+      <h2 className="text-2xl font-bold text-center">Register</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <FormInput
+          label="Name"
           type="text"
           placeholder="Name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={styles.formInput}
+          setValue={setName}
         />
-        <input
+        <FormInput
+          label="Username"
           type="text"
-          placeholder="userName"
+          placeholder="Username"
           value={username}
-          onChange={(e) => setUserName(e.target.value)}
-          className={styles.formInput}
+          setValue={setUserName}
         />
-        <input
+        <FormInput
+          label="Email"
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.formInput}
+          setValue={setEmail}
         />
-        <input
+        <FormInput
+          label="Password"
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.formInput}
+          setValue={setPassword}
         />
-        <button type="submit" className={styles.formButton}>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 col-span-full sm:col-span-2"
+        >
           Register
         </button>
       </form>

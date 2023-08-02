@@ -1,51 +1,26 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import Header from "../Header/index";
+import { ThemeContext } from "../../context/ThemeContext";
 
 type Props = {
   children: ReactNode;
 };
 
-const Layout: React.FC<Props> = (props) => (
-  <div>
-    <Header />
+const Layout: React.FC<Props> = (props) => {
+  const { theme } = useContext(ThemeContext);
 
-    <div className="layout">{props.children}</div>
-    <style jsx global>{`
-      html {
-        box-sizing: border-box;
-      }
-
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-          "Segoe UI Symbol";
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      input,
-      textarea {
-        font-size: 16px;
-      }
-
-      button {
-        cursor: pointer;
-      }
-    `}</style>
-    <style jsx>{`
-      .layout {
-        padding: 0 2rem;
-      }
-    `}</style>
-  </div>
-);
+  return (
+    <div className={theme === "dark" ? "dark" : ""}>
+      <Header />
+      <div
+        className={`${
+          theme === "dark" ? "dark:bg-neutral-800" : "bg-neutral-100"
+        } w-full mx-auto py-4 px-4 sm:px-6 lg:px-8`}
+      >
+        {props.children}
+      </div>
+    </div>
+  );
+};
 
 export default Layout;

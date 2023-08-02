@@ -108,7 +108,11 @@ const Header: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <nav className="flex justify-start p-8 items-center">
+    <nav
+      className={`${
+        theme.theme === "dark" ? "dark:bg-neutral-600" : "bg-sky-100"
+      } flex justify-start p-8 items-center`}
+    >
       <ThemeToggleButton />
       <LeftSection user={user} loading={loading} isActive={isActive} />
       <RightSection user={user} loading={loading} isActive={isActive} />
