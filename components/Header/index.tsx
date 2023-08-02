@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ThemeToggleButton from "../Theme/ThemeToggleButton";
 import Button from "@mui/material/Button";
-
-import classes from "./styels.module.css";
 import { useTheme } from "../../hooks/useTheme";
 import { useAuth } from "../../hooks/useAuth";
 import { User } from "@prisma/client";
@@ -21,15 +19,12 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
   children,
 }) => {
   const theme = useTheme();
+  const activeStyle = theme.theme === "dark" ? "text-white" : "text-black";
+  const activeLink = isActive(href) ? "text-gray-500" : activeStyle;
   return (
     <Link href={href}>
       <p
-        className={`${classes.link} ${classes.linkMargin} ${
-          isActive(href) ? classes.active : ""
-        }`}
-        style={{
-          color: theme.theme === "dark" ? "white" : "black",
-        }}
+        className={`border border-black rounded px-4 py-2 m-2 inline-block ${activeLink}`}
       >
         {children}
       </p>
@@ -46,7 +41,7 @@ type SectionProps = {
 const LeftSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
   if (loading || !user) {
     return (
-      <div className={classes.left}>
+      <div className="flex mr-auto">
         <HeaderLink href="/" isActive={isActive}>
           Feed
         </HeaderLink>
@@ -55,7 +50,7 @@ const LeftSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
   }
 
   return (
-    <div className={classes.left}>
+    <div className="flex mr-auto">
       <HeaderLink href="/" isActive={isActive}>
         Feed
       </HeaderLink>
@@ -76,7 +71,7 @@ const RightSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
 
   if (!user) {
     return (
-      <div className={classes.right}>
+      <div>
         <HeaderLink href="/register" isActive={isActive}>
           Sign up
         </HeaderLink>
@@ -88,12 +83,12 @@ const RightSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
   }
 
   return (
-    <div className={classes.right}>
-      <p className={classes.paragraph}>
+    <div>
+      <p className="inline-block text-base pr-4">
         {user.name} ({user.email})
       </p>
       <Link href="/create">
-        <Button variant="outlined" sx={{ margin: 1 }}>
+        <Button variant="outlined" sx={{ m: 1 }}>
           New post
         </Button>
       </Link>
@@ -113,7 +108,7 @@ const Header: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <nav className={classes.nav}>
+    <nav className="flex justify-start p-8 items-center">
       <ThemeToggleButton />
       <LeftSection user={user} loading={loading} isActive={isActive} />
       <RightSection user={user} loading={loading} isActive={isActive} />
