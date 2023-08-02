@@ -5,7 +5,6 @@ import Layout from "../../components/Layout/index";
 import Router from "next/router";
 import { PostProps } from "../../components/Post";
 import prisma from "../../lib/prisma";
-import Button from "@mui/material/Button";
 const cookie = require("cookie");
 const jwt = require("jsonwebtoken");
 
@@ -54,69 +53,44 @@ const Post: React.FC<PostProps> = (props) => {
   }
   return (
     <Layout>
-      <div>
+      <div className="p-4 md:p-8 lg:p-16">
         {profilePic && (
           <img
             src={profilePic}
             alt="profile"
-            style={{
-              width: "100px",
-              height: "100px",
-              borderRadius: "50%",
-            }}
+            className="w-24 h-24 rounded-full mb-4"
           />
         )}
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+        <h2 className="text-2xl font-bold mb-4">{title}</h2>
+        <p className="text-lg mb-4">
+          By {props?.author?.name || "Unknown author"}
+        </p>
+        <ReactMarkdown className="prose mb-4" children={props.content} />
         {props.videoUrl && (
           <video
             src={props.videoUrl}
             controls
-            style={{ maxWidth: "100%", maxHeight: "400px" }}
+            className="max-w-full max-h-96 mb-4"
           ></video>
         )}
 
         {!props.published && postBelongsToUser && (
-          <Button
-            variant="contained"
+          <button
             onClick={() => publishPost(props.id)}
-            sx={{ margin: 1, float: "right" }}
+            className="float-right mt-2 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
           >
             Publish
-          </Button>
+          </button>
         )}
         {postBelongsToUser && (
-          <Button
-            variant="contained"
+          <button
             onClick={() => deletePost(props.id)}
-            sx={{ margin: 1, float: "right" }}
+            className="float-right mt-2 mr-2 px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700"
           >
             Delete
-          </Button>
+          </button>
         )}
       </div>
-      <style jsx>{`
-        .page {
-          background: white;
-          padding: 2rem;
-        }
-
-        .actions {
-          margin-top: 2rem;
-        }
-
-        button {
-          background: #ececec;
-          border: 0;
-          border-radius: 0.125rem;
-          padding: 1rem 2rem;
-        }
-
-        button + button {
-          margin-left: 1rem;
-        }
-      `}</style>
     </Layout>
   );
 };

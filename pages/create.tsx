@@ -26,6 +26,7 @@ const Draft: React.FC = () => {
       setIsLoading(false);
     }
   }, []);
+
   let decodedToken;
   let email: string | undefined;
 
@@ -53,9 +54,9 @@ const Draft: React.FC = () => {
     <Layout>
       {isLoading && <Spinner />}
       {!isLoading && (
-        <div>
-          <form onSubmit={submitData}>
-            <h1>New Draft</h1>
+        <div className="flex justify-center align-center">
+          <form onSubmit={submitData} className="w-3/4 mx-auto mt-10">
+            <h1 className="text-3xl font-bold mb-4">New Draft</h1>
             <input
               autoFocus
               onChange={(e) => setTitle(e.target.value)}
@@ -63,6 +64,7 @@ const Draft: React.FC = () => {
               type="text"
               value={title}
               id="title"
+              className="w-full py-2 px-4 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <textarea
               cols={50}
@@ -71,79 +73,37 @@ const Draft: React.FC = () => {
               rows={8}
               value={content}
               id="content"
+              className="w-full py-2 px-4 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <input
               type="file"
               accept="video/*"
               onChange={handleFileChange}
               id="video"
+              className="w-full py-2 px-4 mb-3 border rounded shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
-
-            <Button
+            <button
               disabled={!content || !title}
               type="submit"
-              variant="contained"
-              sx={{
-                margin: "1rem",
-                backgroundColor: "#3f51b5",
-                ":disabled": {
-                  backgroundColor: "lightgrey",
-                },
-                float: "right",
-              }}
+              className={`inline-block px-4 py-2 mr-2 mb-2 text-white rounded ${
+                !content || !title
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
             >
               Create
-            </Button>
+            </button>
 
-            <Button
+            <button
               onClick={() => Router.push("/")}
-              variant="contained"
-              sx={{
-                margin: "1rem",
-                backgroundColor: "#3f51b5",
-                float: "right",
-              }}
+              type="button"
+              className="inline-block px-4 py-2 mr-2 mb-2 text-white bg-blue-600 rounded hover:bg-blue-700"
             >
               Cancel
-            </Button>
+            </button>
           </form>
         </div>
       )}
-      <style jsx>{`
-        .page {
-          background: white;
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        input[type="text"] {
-          bold: 1px solid #ececec;
-          width: 25%;
-          border: 0.125rem solid rgba(0, 0, 0, 0.2);
-          border-radius: 0.25rem;
-          padding: 0.3rem;
-          margin: 0.5rem 0;
-        }
-        textarea {
-          width: 100%;
-          padding: 0.5rem;
-          margin: 0.5rem 0;
-          border-radius: 0.25rem;
-          border: 0.125rem solid rgba(0, 0, 0, 0.2);
-        }
-
-        input[type="submit"] {
-          background: #ececec;
-          border: 0;
-          padding: 1rem 2rem;
-        }
-
-        .back {
-          margin-left: 1rem;
-        }
-      `}</style>
     </Layout>
   );
 };
