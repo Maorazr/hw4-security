@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Layout from "../components/Layout/index";
 
 export default function Login() {
   const router = useRouter();
@@ -35,40 +36,42 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="usernameOrEmail" className="block mb-1">
-            Username or Email
-          </label>
-          <input
-            type="text"
-            id="usernameOrEmail"
-            placeholder="Username or Email"
-            value={userNameOrEmail}
-            onChange={(e) => setUserNameOrEmail(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-          <label htmlFor="password" className="block mb-1">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            Login
-          </button>
-        </form>
+    <Layout>
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold mb-4">Login</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="usernameOrEmail" className="block mb-1">
+              Username or Email
+            </label>
+            <input
+              type="text"
+              id="usernameOrEmail"
+              placeholder="Username or Email"
+              value={userNameOrEmail}
+              onChange={(e) => setUserNameOrEmail(e.target.value)}
+              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+            <label htmlFor="password" className="block mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            />
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            >
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }

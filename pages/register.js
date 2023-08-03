@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
-
+import Layout from "../components/Layout/index";
 const FormInput = ({ label, type, placeholder, value, setValue }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
@@ -66,44 +66,48 @@ export default function Register() {
     }
   };
   return (
-    <div className="flex flex-col w-full max-w-md mx-auto p-6 space-y-8 justify-center mt-40 shadow-lg">
-      <h2 className="text-2xl font-bold text-center">Register</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-        <FormInput
-          label="Name"
-          type="text"
-          placeholder="Name"
-          value={name}
-          setValue={setName}
-        />
-        <FormInput
-          label="Username"
-          type="text"
-          placeholder="Username"
-          value={username}
-          setValue={setUserName}
-        />
-        <FormInput
-          label="Email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          setValue={setEmail}
-        />
-        <FormInput
-          label="Password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 col-span-full sm:col-span-2"
-        >
-          Register
-        </button>
-      </form>
-    </div>
+    <Layout>
+      <div className="flex items-center justify-center  h-screen">
+        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-center">Register</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <FormInput
+              label="Name"
+              type="text"
+              placeholder="Name"
+              value={name}
+              setValue={setName}
+            />
+            <FormInput
+              label="Username"
+              type="text"
+              placeholder="Username"
+              value={username}
+              setValue={setUserName}
+            />
+            <FormInput
+              label="Email"
+              type="email"
+              placeholder="Email"
+              value={email}
+              setValue={setEmail}
+            />
+            <FormInput
+              label="Password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              setValue={setPassword}
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 col-span-full sm:col-span-2"
+            >
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </Layout>
   );
 }

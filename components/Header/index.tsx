@@ -84,7 +84,7 @@ const RightSection: React.FC<SectionProps> = ({ user, loading, isActive }) => {
 
   return (
     <div>
-      <p className="inline-block text-base pr-4">
+      <p className="inline-block text-base ">
         {user.name} ({user.email})
       </p>
       <Link href="/create">
@@ -110,8 +110,8 @@ const Header: React.FC = () => {
   return (
     <nav
       className={`${
-        theme.theme === "dark" ? "dark:bg-neutral-600" : "bg-sky-100"
-      } flex justify-start p-8 items-center`}
+        theme.theme === "dark" ? "dark:bg-neutral-600" : "bg-sky-200"
+      } flex justify-start p-2 items-center`}
     >
       <ThemeToggleButton />
       <LeftSection user={user} loading={loading} isActive={isActive} />

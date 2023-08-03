@@ -66,7 +66,13 @@ const Drafts: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-4">My Drafts</h1>
+        <div className="flex items-center mb-4">
+          <h1 className="text-4xl font-bold">My Drafts</h1>
+          <span className="text-xl font-semibold ml-1 mt-1">
+            ({drafts.length})
+          </span>
+        </div>
+
         <main>
           {drafts.map((post) => (
             <div
