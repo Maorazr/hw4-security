@@ -32,11 +32,13 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
     <div
       onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
       className={`p-5 ${postStyles} cursor-pointer`}
+      data-testId={`post-${post.id}`}
     >
       {authorProfilePic && (
         <img
           src={authorProfilePic}
           className="w-24 h-24 rounded-full border-gray-300 border mb-5"
+          data-testid={`post-${post.id}-author-profile`}
         />
       )}
       {post.videoUrl && (
@@ -47,16 +49,25 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           className="float-right"
         />
       )}
-      <h2 className="text-3xl font-bold mb-2">{post.title}</h2>
-      <small className="block text-base text-gray-500 mb-4">
+      <h2 data-testId="title" className="text-3xl font-bold mb-2">
+        {post.title}
+      </h2>
+      <small
+        data-testId="author"
+        className="block text-base text-gray-500 mb-4"
+      >
         By {authorName}
       </small>
-      <ReactMarkdown className="text-xl mb-10">{post.content}</ReactMarkdown>
+      <div data-testid="content">
+        <ReactMarkdown className="text-xl mb-10">{post.content}</ReactMarkdown>
+      </div>
+
       {post.videoUrl && (
         <video
           src={post.videoUrl}
           controls
           className="max-w-full max-h-96"
+          data-testid={`post-${post.id}-video-player`}
         ></video>
       )}
     </div>

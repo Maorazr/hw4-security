@@ -23,7 +23,8 @@
     "components/Header.jsx",
     "pages copy/api/auth/register.js",
     "__tests__/api/registration.test.js",
-    "pages copy/api/post/latest.js"
+    "pages copy/api/post/latest.js",
+    "components/Post/indexPost.cy.jsx"
   ],
   "ts-node": {
     "compilerOptions": {
