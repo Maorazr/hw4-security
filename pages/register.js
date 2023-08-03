@@ -67,7 +67,10 @@ export default function Register() {
   };
   return (
     <Layout>
-      <div className="flex items-center justify-center  h-screen">
+      <div
+        className="flex items-center justify-center"
+        style={{ height: "calc(100vh - 6.7rem)" }}
+      >
         <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-center">Register</h2>
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">

@@ -14,14 +14,14 @@ const Layout: React.FC<Props> = (props) => {
     <div
       className={`${
         theme === "dark" ? "dark" : ""
-      } flex flex-col min-h-screen bg-sky-300`} // Set the background color to your preference
+      } flex flex-col min-h-screen bg-sky-300 `} // Set the background color to your preference
     >
       <Header />
       <div className="container mx-auto">
         <div
           className={`${
             theme === "dark" ? "dark:bg-neutral-800" : "bg-cyan-50"
-          } flex-grow mx-4 py-4 px-4 sm:px-6 lg:px-8`} // Adjust the mx-4 to change the width of your main content area
+          } flex-grow mx-4 py-4 px-4 sm:px-6 lg:px-8 `} // Adjust the mx-4 to change the width of your main content area
         >
           {props.children}
         </div>
