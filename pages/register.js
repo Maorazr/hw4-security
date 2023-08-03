@@ -72,7 +72,12 @@ export default function Register() {
         style={{ height: "calc(100vh - 6.7rem)" }}
       >
         <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center">Register</h2>
+          <h2
+            testId="h2Register"
+            className="text-2xl font-bold text-center mb-4"
+          >
+            Register
+          </h2>
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
             <FormInput
               label="Name"

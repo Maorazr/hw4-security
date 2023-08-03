@@ -52,6 +52,7 @@ const ProfilePhoto = (props) => {
     <div>
       <div className={styles.profilePictureContainer} onClick={onImageClick}>
         <img
+          testId="profileImg"
           src={profileImage}
           className={`profilePicture ${styles.profilePicture}`}
         />
@@ -61,18 +62,23 @@ const ProfilePhoto = (props) => {
           onChange={handleFileChange}
           className={styles.input}
           ref={fileInputRef}
+          testId="fileInput"
           style={{ display: "none" }}
         />
         {!selected && <span className={styles.label2}>Edit</span>}
       </div>
       <form className={styles.form} onSubmit={handleSubmit}>
         {selected && (
-          <button className={styles.button} type="submit">
+          <button testId="updatePhoto" className={styles.button} type="submit">
             Update Photo
           </button>
         )}
         {selected && (
-          <button className={styles.button} onClick={handleDiscard}>
+          <button
+            testId="discard"
+            className={styles.button}
+            onClick={handleDiscard}
+          >
             {" "}
             Discard{" "}
           </button>

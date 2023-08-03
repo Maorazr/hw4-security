@@ -51,7 +51,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <small className="block text-base text-gray-500 mb-4">
         By {authorName}
       </small>
-      <ReactMarkdown className="text-2xl mb-10">{post.content}</ReactMarkdown>
+      <ReactMarkdown className="text-xl mb-10">{post.content}</ReactMarkdown>
       {post.videoUrl && (
         <video
           src={post.videoUrl}
