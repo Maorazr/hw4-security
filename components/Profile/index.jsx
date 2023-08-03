@@ -34,7 +34,7 @@ const ProfilePage = (props) => {
 
   return (
     <Layout user={user}>
-      <div className="w-full sm:w-4/5 md:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto bg-white dark:bg-neutral-800 p-8 rounded shadow-md">
+      <div className="mt-12 w-full sm:w-4/5 md:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto bg-white dark:bg-neutral-800 p-8 rounded shadow-md">
         <ProfilePhoto
           user={user}
           onProfileImgChange={handleProfileImageChange}

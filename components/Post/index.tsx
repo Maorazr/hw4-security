@@ -31,45 +31,53 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <div
       onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}
-      className={`p-5 ${postStyles} cursor-pointer`}
+      className={`flex p-5 ${postStyles} cursor-pointer`}
       data-testId={`post-${post.id}`}
     >
-      {authorProfilePic && (
-        <img
-          src={authorProfilePic}
-          className="w-24 h-24 rounded-full border-gray-300 border mb-5"
-          data-testid={`post-${post.id}-author-profile`}
-        />
-      )}
-      {post.videoUrl && (
-        <img
-          src="/icons8-video-25.png"
-          width="25px"
-          height="25px"
-          className="float-right"
-        />
-      )}
-      <h2 data-testId="title" className="text-3xl font-bold mb-2">
-        {post.title}
-      </h2>
-      <small
-        data-testId="author"
-        className="block text-base text-gray-500 mb-4"
+      <div
+        className={`w-36 h-48 bg-blue-300 dark:bg-violet-700 rounded-lg shadow-lg p-6`}
       >
-        By {authorName}
-      </small>
-      <div data-testid="content">
-        <ReactMarkdown className="text-xl mb-10">{post.content}</ReactMarkdown>
+        {authorProfilePic && (
+          <img
+            src={authorProfilePic}
+            className="w-24 h-24 rounded-full border-4 border-white mb-5"
+            data-testid={`post-${post.id}-author-profile`}
+          />
+        )}
+        <div className="flex flex-col items-center">
+          <small data-testId="author" className="block text-base mb-4">
+            {authorName}
+          </small>
+        </div>
       </div>
+      <div className="flex-1 p-8">
+        {post.videoUrl && (
+          <img
+            src="/icons8-video-25.png"
+            width="25px"
+            height="25px"
+            className="float-right"
+          />
+        )}
+        <h2 data-testId="title" className="text-3xl font-bold mb-2">
+          {post.title}
+        </h2>
 
-      {post.videoUrl && (
-        <video
-          src={post.videoUrl}
-          controls
-          className="max-w-full max-h-96"
-          data-testid={`post-${post.id}-video-player`}
-        ></video>
-      )}
+        <div data-testid="content">
+          <ReactMarkdown className="text-xl mb-10">
+            {post.content}
+          </ReactMarkdown>
+        </div>
+
+        {post.videoUrl && (
+          <video
+            src={post.videoUrl}
+            controls
+            className="max-w-full max-h-96"
+            data-testid={`post-${post.id}-video-player`}
+          ></video>
+        )}
+      </div>
     </div>
   );
 };

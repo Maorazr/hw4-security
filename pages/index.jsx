@@ -30,8 +30,13 @@ const Blog = ({ initialData }) => {
 
   return (
     <Layout>
-      <div className="page">
+      <div className="mt-8">
         <h1 className="text-4xl font-bold mb-4">Public Feed</h1>
+        <Paginate
+          currentPage={currentPage}
+          totalPages={totalPages}
+          paginate={setCurrentPage}
+        />
         <main>
           {posts &&
             posts.map((post) => (
@@ -42,11 +47,6 @@ const Blog = ({ initialData }) => {
                 <Post post={post} />
               </div>
             ))}
-          <Paginate
-            currentPage={currentPage}
-            totalPages={totalPages}
-            paginate={setCurrentPage}
-          />
         </main>
       </div>
     </Layout>

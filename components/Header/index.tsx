@@ -19,15 +19,14 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
   children,
 }) => {
   const theme = useTheme();
-  const activeStyle = theme.theme === "dark" ? "text-white" : "text-black";
-  const activeLink = isActive(href) ? "text-gray-500" : activeStyle;
+  const activeLink = isActive(href) ? "text-yellow-500 dark:text-gray-100" : "";
   return (
     <Link href={href}>
-      <p
-        className={`border border-black rounded px-4 py-2 m-2 inline-block ${activeLink}`}
+      <button
+        className={`dark:bg-violet-500 dark:hover:bg-violet-600 dark:active:bg-violet-700 focus:outline-none focus:ring focus:ring-blue text-white border rounded px-4 py-2 m-2 inline-block bg-orange-400 hover:bg-orange-500 active:bg-orange-600`}
       >
         {children}
-      </p>
+      </button>
     </Link>
   );
 };
@@ -108,11 +107,7 @@ const Header: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <nav
-      className={`${
-        theme.theme === "dark" ? "dark:bg-neutral-600" : "bg-sky-200"
-      } flex justify-start p-2 items-center`}
-    >
+    <nav className="bg-yellow-100 dark:bg-neutral-600 flex justify-start p-2 items-center fixed top-0 left-0 right-0 z-50 shadow-lg">
       <ThemeToggleButton />
       <LeftSection user={user} loading={loading} isActive={isActive} />
       <RightSection user={user} loading={loading} isActive={isActive} />
