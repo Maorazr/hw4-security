@@ -40,10 +40,18 @@ const ProfilePage = (props) => {
           onProfileImgChange={handleProfileImageChange}
         />
         <div className="mt-8">
-          <ProfileCard testId="name" label="Name:" value={user.name} />
-          <ProfileCard testId="email" label="Email:" value={user.email} />
           <ProfileCard
-            testId="username"
+            testId="profileCard-name"
+            label="Name:"
+            value={user.name}
+          />
+          <ProfileCard
+            testId="profileCard-email"
+            label="Email:"
+            value={user.email}
+          />
+          <ProfileCard
+            testId="profileCard-username"
             label="Username:"
             value={user.username}
           />

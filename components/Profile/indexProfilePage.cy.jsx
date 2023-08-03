@@ -29,8 +29,11 @@ describe("<ProfilePage />", () => {
   });
 
   it("renders", () => {
-    cy.get('[testid="name"]').should("contain", mockUser.name);
-    cy.get('[testid=email"]').should("contain", mockUser.email);
-    cy.get('[testid="username"]').should("contain", mockUser.username);
+    cy.get('[testid="profileCard-name"]').should("contain", mockUser.name);
+    cy.get('[testid="profileCard-email"]').should("contain", mockUser.email);
+    cy.get('[testid="profileCard-username"]').should(
+      "contain",
+      mockUser.username
+    );
   });
 });
