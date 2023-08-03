@@ -1,7 +1,6 @@
 import React, { ReactNode, useContext } from "react";
 import Header from "../Header/index";
 import { ThemeContext } from "../../context/ThemeContext";
-import FullScreenLayout from "./FullScreenLayout";
 
 type Props = {
   children: ReactNode;
@@ -13,8 +12,8 @@ const Layout: React.FC<Props> = (props) => {
   return (
     <div
       className={`${
-        theme === "dark" ? "dark" : ""
-      } flex flex-col min-h-screen bg-sky-300 `} // Set the background color to your preference
+        theme === "dark" ? "dark" : "bg-sky-300"
+      } flex flex-col min-h-screen `} // Set the background color to your preference
     >
       <Header />
       <div className="container mx-auto">
