@@ -31,6 +31,7 @@ describe("<ProfilePhoto />", () => {
     cy.get('[testId="profileImg"]').click();
 
     cy.get('input[testId="fileInput"]').attachFile("profilePhotoTest.jpg");
+
     cy.get('button[testId="discard"]').click();
   });
 });

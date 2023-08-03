@@ -4,8 +4,11 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import ProfilePhoto from "./ProfilePhoto";
 
-const ProfileCard = ({ label, value }) => (
-  <div className="flex my-5 p-3 border-b border-gray-300 dark:border-gray-600 font-roboto text-xl">
+const ProfileCard = ({ label, value, testId }) => (
+  <div
+    testId={testId}
+    className="flex my-5 p-3 border-b border-gray-300 dark:border-gray-600 font-roboto text-xl"
+  >
     <div className={`font-bold text-gray-800 dark:text-white mr-2`}>
       {label}
     </div>
@@ -37,9 +40,13 @@ const ProfilePage = (props) => {
           onProfileImgChange={handleProfileImageChange}
         />
         <div className="mt-8">
-          <ProfileCard label="Name:" value={user.name} />
-          <ProfileCard label="Email:" value={user.email} />
-          <ProfileCard label="Username:" value={user.username} />
+          <ProfileCard testId="name" label="Name:" value={user.name} />
+          <ProfileCard testId="email" label="Email:" value={user.email} />
+          <ProfileCard
+            testId="username"
+            label="Username:"
+            value={user.username}
+          />
         </div>
       </div>
     </Layout>
