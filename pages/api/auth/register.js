@@ -64,9 +64,9 @@ async function handle(req, res) {
       "Set-Cookie",
       cookie.serialize("auth", token, {
         httpOnly: true,
-        secure: false, // process.env.NODE_ENV !== "development",
+        secure: process.env.NODE_ENV !== "development", // false,
         maxAge: 86400, // 1d
-        sameSite: "none", //"strict",
+        sameSite: "strict", //"none",
         path: "/",
       })
     );

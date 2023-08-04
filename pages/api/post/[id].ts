@@ -1,6 +1,7 @@
 import type { NextApiResponse } from "next";
 import type { NextApiRequest as NetxReq } from "next";
 import prisma from "../../../lib/prisma";
+import validateJWT from "../middleware/validateJWT";
 
 interface NextApiRequest extends NetxReq {
   userId?: Number;
@@ -11,12 +12,12 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
   const postId = req.query.id;
   const userId = req.userId;
 
-  if (req.method === "POST" && req.body._method === "DELETE") {
+  if (req.method === "DELETE") {
     const post = await prisma.post.findUnique({
       where: { id: Number(postId) },
     });
 
-    if (!post) {
+    if (!post || post.authorId !== userId) {
       return res.status(401).send({ message: "Unauthorized" });
     }
 
@@ -32,4 +33,4 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default handle;
+export default validateJWT(handle);
