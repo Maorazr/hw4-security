@@ -41,7 +41,7 @@ export default function Login() {
         className="flex items-center justify-center "
         style={{ height: "calc(100vh - 6.7rem)" }}
       >
-        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
+        <div className="w-full max-w-md p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Login</h2>
           <form onSubmit={handleSubmit}>
             <label htmlFor="usernameOrEmail" className="block mb-1">

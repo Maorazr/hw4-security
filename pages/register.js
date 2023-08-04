@@ -71,7 +71,7 @@ export default function Register() {
         className="flex items-center justify-center"
         style={{ height: "calc(100vh - 6.7rem)" }}
       >
-        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
+        <div className="w-full max-w-md p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
           <h2
             testId="h2Register"
             className="text-2xl font-bold text-center mb-4"
