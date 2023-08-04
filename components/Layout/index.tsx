@@ -11,9 +11,7 @@ const Layout: React.FC<Props> = (props) => {
 
   return (
     <div
-      className={`${
-        theme === "dark" ? "dark" : "bg-sky-300"
-      } flex flex-col min-h-screen `} // Set the background color to your preference
+      className="flex flex-col min-h-screen" // Set the background color to your preference
     >
       <Header />
       <div className="mt-14 flex-grow py-4 px-4 sm:px-6 lg:px-8">
