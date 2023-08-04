@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Form.module.css";
 import Layout from "../components/Layout/index";
+
 const FormInput = ({ label, type, placeholder, value, setValue }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
@@ -13,7 +14,7 @@ const FormInput = ({ label, type, placeholder, value, setValue }) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="border rounded-lg p-2"
+        className="border rounded-lg p-2 dark:text-gray-900"
       />
     </div>
   );
@@ -78,7 +79,7 @@ export default function Register() {
           >
             Register
           </h2>
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4 ">
             <FormInput
               label="Name"
               type="text"

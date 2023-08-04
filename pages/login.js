@@ -53,7 +53,7 @@ export default function Login() {
               placeholder="Username or Email"
               value={userNameOrEmail}
               onChange={(e) => setUserNameOrEmail(e.target.value)}
-              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500 dark:text-gray-900"
             />
             <label htmlFor="password" className="block mb-1">
               Password
@@ -64,7 +64,7 @@ export default function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500 dark:text-gray-900"
             />
             <button
               type="submit"
